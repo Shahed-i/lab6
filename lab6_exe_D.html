@@ -2,8 +2,8 @@
 =========================================================
 Name        : lab6_exe_D.html
 Assignment  : Lab 6, Exercise D
-Author(s)   : Mahdi Ansari, William Arthur Philip Louis
-Submission  : May 21, 2030
+Author(s)   : Neha Parmar, Shahed Issa
+Submission  : Feb 26, 2024
 Description : API Usage.
 =========================================================
 -->
@@ -47,14 +47,28 @@ Description : API Usage.
     <script>
         // Function to fetch and display students
         async function fetchStudents() {
-            
-        }
+            const response = await fetch('https://65dd058be7edadead7ed535e.mockapi.io/students');
+            const students = await response.json();
+            const studentList = document.getElementById('studentList');
+            students.forEach(student => {
+                const listItem = document.createElement('li');
+                listItem.textContent = student.name;
+                listItem.onclick = () => fetchCourses(student.id);
+                studentList.appendChild(listItem);
+        })
+    }
 
         // Function to fetch and display courses for a student
         async function fetchCourses(studentId) {
-            
-        }
-
+            const response = await fetch(`https://65dd058be7edadead7ed535e.mockapi.io/students/${studentId}/courses`);
+            const courses = await response.json();
+            const courseList = document.getElementById('courseList');
+            courses.forEach(course => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${course.name} - ${course.unit}`;
+                courseList.appendChild(listItem);
+        })
+    }
         // Fetch students on window load
         window.onload = fetchStudents;
     </script>
